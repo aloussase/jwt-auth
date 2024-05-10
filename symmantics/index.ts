@@ -1,3 +1,7 @@
 import TokenSymmantics from "./tokens";
+import UserSymmantics from "./users";
 
-export { TokenSymmantics };
+export {
+  TokenSymmantics,
+  UserSymmantics,
+};
