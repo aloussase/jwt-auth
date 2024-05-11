@@ -1,15 +1,19 @@
 import express from "express"
 import type { RequestHandler } from "express";
 import * as T from "fp-ts/Task"
+import * as O from "fp-ts/Option"
+import { compare } from "bcryptjs"
 
 import { getJwtTokensSymmantics } from "./impls";
 import { pipe } from "fp-ts/lib/function";
+import { getInMemoryUsers } from "./impls/in_memory_users";
 
 const app = express();
 
 app.get("/healthcheck", (_, res) => res.json("OK"))
 
 const TOKENS = getJwtTokensSymmantics();
+const USERS = getInMemoryUsers();
 
 const verifyAccessTokenMiddleware: RequestHandler = (req, res, next) => {
   const authorization = req.header("Authorization")
@@ -29,13 +33,37 @@ const verifyAccessTokenMiddleware: RequestHandler = (req, res, next) => {
   )()
 }
 
-app.get("/auth/login/:username", async (req, res) => {
-  const username = req.params["username"]
-  return pipe(
+app.post("/auth/login/", async (req, res) => {
+  const { username, password } = req.body
+  pipe(
     T.Do,
-    T.bind("token", () => TOKENS.createToken({ subject: username })),
-    T.tap(({ token }) => T.fromIO(() => res.json({ token })))
-  )();
+    T.bind("maybeUser", () => USERS.getUserByUsername(username)),
+    T.chain(({ maybeUser }) => {
+      return pipe(
+        maybeUser,
+        O.match(
+          () => T.fromIO(() => res.status(404).send()),
+          (user) => {
+            return pipe(
+              T.Do,
+              T.bind("ok", () => () => compare(password, user.password)),
+              T.chain(({ ok }) => {
+                if (ok) {
+                  return pipe(
+                    T.Do,
+                    T.bind("token", () => TOKENS.createToken({ subject: username })),
+                    T.chain(({ token }) => T.fromIO(() => res.json({ token })))
+                  )
+                } else {
+                  return T.fromIO(() => res.status(401).send())
+                }
+              }),
+            )
+          },
+        )
+      )
+    })
+  )()
 })
 
 app.get("/protected", verifyAccessTokenMiddleware, (req, res) => {
