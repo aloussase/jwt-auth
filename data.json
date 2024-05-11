@@ -1,27 +1,27 @@
 [
   {
     "id": 1,
-    "name": "Chise Hatori",
+    "name": "Chise Hatori Holding C Book",
     "imageUrl": "https://raw.githubusercontent.com/cat-milk/Anime-Girls-Holding-Programming-Books/master/C%2B%2B/Chise_Hatori_Holding_C%2B%2B_Book.jpg"
   },
   {
     "id": 2,
-    "name": "Frieren",
+    "name": "Frieren C++",
     "imageUrl": "https://github.com/cat-milk/Anime-Girls-Holding-Programming-Books/blob/master/C++/Sousou_no_Frieren_c++.png?raw=true"
   },
   {
     "id": 3,
-    "name": "Ryo Yamada",
+    "name": "Ryo Yamada Holding Haskell Book",
     "imageUrl": "https://github.com/cat-milk/Anime-Girls-Holding-Programming-Books/blob/master/Haskell/Ryo_Yamada_Holding_Haskell_Book.jpg?raw=true"
   },
   {
     "id": 4,
-    "name": "Shinomiya Kaguya",
+    "name": "Shinomiya Kaguya Holding Haskell Programming",
     "imageUrl": "https://github.com/cat-milk/Anime-Girls-Holding-Programming-Books/blob/master/Haskell/Shinomiya_Kaguya_Holding_Haskell_Programming.png?raw=true"
   },
   {
     "id": 5,
-    "name": "",
-    "imageUrl": ""
+    "name": "Rin Mastering Julia",
+    "imageUrl": "https://github.com/cat-milk/Anime-Girls-Holding-Programming-Books/blob/master/Julia/Rin_Mastering_Julia.png?raw=true"
   }
 ]
