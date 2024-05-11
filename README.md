@@ -1,15 +1,8 @@
 # jwt-auth
 
-To install dependencies:
+This repository contains an example project showing how to implement
+authentication using JWTs.
 
-```bash
-bun install
-```
-
-To run:
-
-```bash
-bun run index.ts
-```
-
-This project was created using `bun init` in bun v1.0.14. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+As a bonus, it also shows how to use the
+[fp-ts](https://gcanti.github.io/fp-ts/) library to build a declarative domain
+using the tagless final pattern.
