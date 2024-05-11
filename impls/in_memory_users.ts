@@ -4,7 +4,6 @@ import * as T from "fp-ts/Task";
 import * as O from "fp-ts/Option";
 import { User } from "../symmantics/users";
 
-
 export const getInMemoryUsers = (): UserSymmantics<T.URI> => {
   const db = new Map<number, User>();
   const nextId = () => db.size + 1;

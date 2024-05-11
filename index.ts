@@ -2,7 +2,7 @@ import express from "express"
 import type { RequestHandler } from "express";
 import * as T from "fp-ts/Task"
 import * as O from "fp-ts/Option"
-import { compare } from "bcryptjs"
+import { compare, hash } from "bcryptjs"
 
 import { getJwtTokensSymmantics } from "./impls";
 import { pipe } from "fp-ts/lib/function";
@@ -73,7 +73,8 @@ app.post("/auth/register", async (req, res) => {
   const { username, password } = req.body
   return pipe(
     T.Do,
-    T.bind("maybeUser", () => USERS.createUser(username, password)),
+    T.bind("hashedPassword", () => () => hash(password, 10)),
+    T.bind("maybeUser", ({ hashedPassword }) => USERS.createUser(username, hashedPassword)),
     T.chain(({ maybeUser }) => {
       return pipe(
         maybeUser,
