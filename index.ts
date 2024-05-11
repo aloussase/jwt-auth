@@ -7,8 +7,11 @@ import { compare } from "bcryptjs"
 import { getJwtTokensSymmantics } from "./impls";
 import { pipe } from "fp-ts/lib/function";
 import { getInMemoryUsers } from "./impls/in_memory_users";
+import bodyParser from "body-parser";
 
 const app = express();
+
+app.use(bodyParser.json())
 
 app.get("/healthcheck", (_, res) => res.json("OK"))
 
@@ -64,6 +67,23 @@ app.post("/auth/login/", async (req, res) => {
       )
     })
   )()
+})
+
+app.post("/auth/register", async (req, res) => {
+  const { username, password } = req.body
+  return pipe(
+    T.Do,
+    T.bind("maybeUser", () => USERS.createUser(username, password)),
+    T.chain(({ maybeUser }) => {
+      return pipe(
+        maybeUser,
+        O.match(
+          () => T.fromIO(() => res.status(400).send()),
+          (user) => T.fromIO(() => res.status(201).json(user)),
+        )
+      );
+    })
+  )();
 })
 
 app.get("/protected", verifyAccessTokenMiddleware, (req, res) => {
