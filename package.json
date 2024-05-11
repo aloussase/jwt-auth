@@ -15,10 +15,12 @@
   "dependencies": {
     "@types/bcryptjs": "^2.4.6",
     "@types/jsonwebtoken": "^9.0.6",
+    "@types/lodash": "^4.17.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
     "express": "^4.19.2",
     "fp-ts": "^2.16.5",
-    "jsonwebtoken": "^9.0.2"
+    "jsonwebtoken": "^9.0.2",
+    "lodash": "^4.17.21"
   }
 }
