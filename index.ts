@@ -8,6 +8,7 @@ import { getInMemoryUsers } from "./impls/in_memory_users";
 import bodyParser from "body-parser";
 import * as API from "./api"
 import _ from "lodash";
+import data from "./data.json"
 
 const app = express();
 
@@ -65,34 +66,6 @@ app.post("/auth/register", async (req, res) => {
   )()
 })
 
-app.get("/anime-girls", verifyAccessTokenMiddleware, (_req, res) => {
-  return res.json([
-    {
-      id: 1,
-      name: "Chise Hatori",
-      imageUrl: "https://raw.githubusercontent.com/cat-milk/Anime-Girls-Holding-Programming-Books/master/C%2B%2B/Chise_Hatori_Holding_C%2B%2B_Book.jpg",
-    },
-    {
-      id: 2,
-      name: "Frieren",
-      imageUrl: "https://github.com/cat-milk/Anime-Girls-Holding-Programming-Books/blob/master/C++/Sousou_no_Frieren_c++.png?raw=true",
-    },
-    {
-      id: 3,
-      name: "Ryo Yamada",
-      imageUrl: "https://github.com/cat-milk/Anime-Girls-Holding-Programming-Books/blob/master/Haskell/Ryo_Yamada_Holding_Haskell_Book.jpg?raw=true",
-    },
-    {
-      id: 4,
-      name: "Shinomiya Kaguya",
-      imageUrl: "https://github.com/cat-milk/Anime-Girls-Holding-Programming-Books/blob/master/Haskell/Shinomiya_Kaguya_Holding_Haskell_Programming.png?raw=true",
-    },
-    {
-      id: 5,
-      name: "",
-      imageUrl: "",
-    },
-  ])
-})
+app.get("/anime-girls", verifyAccessTokenMiddleware, (_req, res) => res.json(data))
 
 app.listen(3000, () => console.log('Server started on port 3000'))
