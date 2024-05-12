@@ -33,6 +33,11 @@ export default interface PaymentSymmantics<F extends URIS> {
   readonly createPayment: (quincena_id: number, description: string, amount: number) => Kind<F, Option<Payment>>
 
   /**
+   * Get all payments for a given quincena.
+   */
+  readonly getAllPayments: (quincena_id: number) => Kind<F, Payment[]>
+
+  /**
    * Fulfill the specified payment.
    */
   readonly fulfillPayment: (payment_id: number) => Kind<F, boolean>;

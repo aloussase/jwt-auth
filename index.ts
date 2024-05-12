@@ -118,6 +118,15 @@ app.post("/quincenas/:id/payments", async (req, res) => {
   )()
 })
 
+app.get("/quincenas/:id/payments", async (req, res) => {
+  const username = req.username!;
+  const quincena_id = parseInt(req.params['id'])
+  return pipe(
+    API.getAllPayments(PROGRAM)(username, quincena_id),
+    T.map(quincenas => res.status(200).json(quincenas))
+  )()
+})
+
 app.post("/quincenas/:quincena_id/payments/:payment_id/fulfill", async (req, res) => {
   const username = req.username!;
   const quincena_id = parseInt(req.params['quincena_id']);

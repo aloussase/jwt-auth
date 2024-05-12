@@ -30,6 +30,13 @@ export const getDrizzlePayments = (db: Database): PaymentSymmantics<T.URI> => {
     )
   }
 
+  const getAllPayments = (quincena_id: number): T.Task<Payment[]> => {
+    return () => db.query
+      .payments
+      .findMany({ where: eq(payments.quincena_id, quincena_id) })
+      .then((payments) => payments.map(({ amount, ...rest }) => ({ amount: parseFloat(amount), ...rest })))
+  }
+
   const fulfillPayment = (payment_id: number): T.Task<boolean> => {
     return pipe(
       () => db.update(payments).set({ fulfilled: true }).where(eq(payments.id, payment_id)),
@@ -41,6 +48,7 @@ export const getDrizzlePayments = (db: Database): PaymentSymmantics<T.URI> => {
     createQuincena,
     getAllQuincenas,
     createPayment,
+    getAllPayments,
     fulfillPayment,
   }
 }

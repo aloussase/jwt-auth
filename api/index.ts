@@ -67,6 +67,11 @@ export const createPayment = <F extends URIS>(F: Program<F>) => (
   return F.createPayment(quincena_id, description, amount)
 }
 
+export const getAllPayments = <F extends URIS>(F: Program<F>) => (username: string, quincena_id: number) => {
+  // TODO: Check that the quincena belongs to the user.
+  return F.getAllPayments(quincena_id);
+}
+
 export const fulfillPayment = <F extends URIS>(F: Program<F>) =>
   (username: string, quincena_id: number, payment_id: number): Kind<F, boolean> => {
     // TODO: Check that the payment belongs to the user.
