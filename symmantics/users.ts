@@ -2,7 +2,7 @@ import { Kind, URIS } from "fp-ts/HKT";
 import { Option } from "fp-ts/lib/Option";
 
 export interface User {
-  id?: number,
+  id: number,
   username: string,
   password: string,
 }
